@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  # api
+  # goboil-hex-api:
+  #   container_name: goboil-hex-api
+  #   image: goboil-hex-api:latest
+  #   ports:
+  #     - "3030:3030"
+  #   depends_on: 
+  #     - goboil-hex-postgres
+  #     - goboil-hex-redis
+  #     - goboil-hex-es-01
+  #   networks:
+  #     - goboil-hex-net
+    
+  # postgres
+  goboil-hex-postgres:
+    container_name: goboil-hex-postgres
+    image: postgres:12-alpine 
+    environment: 
+      - POSTGRES_USER=goboil_hex_user
+      - POSTGRES_PASSWORD=f72d8509-c70a-485a-a471-23f899b988ab
+      - POSTGRES_DB=goboil_hex_db
+    volumes: 
+      - goboil-hex-postgres:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    networks:
+      - goboil-hex-net
+  
+  # redis
+  goboil-hex-redis:
+    image: "redis:alpine"
+    container_name: goboil-hex-redis
+    command: redis-server --requirepass 21541e54-d91c-4c4b-ab94-26fa5a46a654
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    volumes:
+      - goboil-hex-redis:/var/lib/redis
+      - goboil-hex-redis-conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - goboil-hex-net
+
+volumes:
+  goboil-hex-postgres:
+    external: true
+  goboil-hex-redis:
+    external: true
+  goboil-hex-redis-conf:
+    external: true
+
+networks:
+  goboil-hex-net:
+    name: goboil-hex-net

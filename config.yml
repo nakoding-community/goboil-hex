@@ -1,0 +1,23 @@
+server: 
+  appname: goboil-hex
+  appkey: passphrasewhichneedstobe32bytes!
+  port: 3001
+  version: 1.0.1
+
+swagger:
+  swaggerscheme: https
+  swaggerprefix: 
+  
+jwt: 
+  secret: secretkey
+
+databases:
+  - dbhost: localhost
+    dbuser: goboil_hex_user
+    dbport: 5432
+    dbpass: f72d8509-c70a-485a-a471-23f899b988ab
+    dbname: goboil_hex_db
+    dbprovider: postgresql
+    dbssl: disable
+    dbtz: Asia/Jakarta
+    dbautomigrate: true
